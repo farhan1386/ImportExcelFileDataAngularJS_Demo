@@ -42,7 +42,8 @@ namespace ImportExcelFileDataAngularJS_Demo.Controllers
                     status = true;
                 }
             }
-            return new JsonResult { Data = new { status = status } };
+            return new JsonResult { Data = new { status } };
+            
         }
     }
 }

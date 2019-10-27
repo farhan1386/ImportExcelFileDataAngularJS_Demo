@@ -19,6 +19,6 @@ namespace ImportExcelFileDataAngularJS_Demo.Models
         public string Position { get; set; }
         public string Office { get; set; }
         public Nullable<int> Age { get; set; }
-        public Nullable<int> Salary { get; set; }
+        public Nullable<decimal> Salary { get; set; }
     }
 }
