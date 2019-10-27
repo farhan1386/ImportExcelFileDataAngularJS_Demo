@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "ImportData";
+}
+<link href="@Url.Content("~/Content/dataTables.bootstrap4.min.css")" rel="stylesheet" />
+<div class="container" ng-app="MyApp">
+    <div class="card" ng-controller="MyController">
+        <div class="card-header bg-primary text-white">
+            <h5 class="">List of employees</h5>
+        </div>
+        <div class="card-body">
+            <button style="margin-bottom:10px;" type="button" class="btn btn-primary rounded-0" data-toggle="modal" data-target="#myModal">
+                <i class="fa fa-file-excel-o"></i> Upload Excel File
+            </button>
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Upload Students Result</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" name="file" class="custom-file-input" onchange="angular.element(this).scope().UploadFile(this.files)" />
+                                        <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" ng-disabled="!SelectedFileForUpload" ng-click="ParseExcelDataAndSave()"><i class="fa fa-upload"></i> Upload</button>
+                                    </div>
+                                </div>
+                                <span class="text-success">
+                                    {{Message}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger rounded-0" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table id="dataTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Salary</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")">
+<script src="@Url.Content("~/Scripts/jquery-3.4.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.1/xlsx.full.min.js")"></script>
+<script src="@Url.Content("http://oss.sheetjs.com/js-xlsx/jszip.js")"></script>
+<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js")"></script>
+<script src="@Url.Content("~/Scripts/ImportData.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.dataTables.min.js")"></script>
+<script src="@Url.Content("~/Scripts/dataTables.bootstrap4.min.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTable').DataTable({
+            "ajax": {
+                "url": "/Home/GetEmployees",
+                "type": "GET",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "Id" },
+                { "data": "Name" },
+                { "data": "Position" },
+                { "data": "Office" },
+                { "data": "Age" },
+                { "data": "Salary" }
+            ]
+        });
+    });
+</script>
